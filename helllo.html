@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Backrooms — Level Guide</title>
+  <style>
+    /* Simple, self-contained styling (still plain HTML file) */
+    :root{
+      --bg:#0f1113; --card:#121417; --muted:#9aa0a6; --accent:#ff6b4a; --soft:#1a1d20;
+      --glass: rgba(255,255,255,0.02);
+      font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#0b0c0d, #0f1113);color:#e7eaee}
+    .wrap{max-width:980px;margin:32px auto;padding:28px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:12px;box-shadow:0 6px 30px rgba(0,0,0,0.6)}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    h1{margin:0;font-size:28px;letter-spacing:0.4px}
+    p.lead{color:var(--muted);margin-top:6px;margin-bottom:18px}
+    nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+    a.btn{display:inline-block;padding:8px 12px;background:var(--soft);color:var(--muted);text-decoration:none;border-radius:8px;font-size:14px}
+    a.btn:hover{background:rgba(255,255,255,0.03);color:#fff}
+    section.card{background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.01));padding:16px;border-radius:10px;margin:14px 0;border:1px solid rgba(255,255,255,0.03)}
+    section.card h2{margin:0 0 8px 0;font-size:20px}
+    .meta{font-size:13px;color:var(--muted);margin-bottom:12px}
+    ul{margin:8px 0 12px 20px;color:var(--muted)}
+    .tip{background:linear-gradient(90deg, rgba(255,107,74,0.06), rgba(255,107,74,0.02));padding:10px;border-radius:8px;color:#ffdcd0;border:1px solid rgba(255,107,74,0.06);margin-top:10px}
+    footer{color:var(--muted);font-size:13px;margin-top:18px;text-align:center}
+    .badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;background:rgba(255,255,255,0.02);color:var(--muted);margin-left:8px}
+    .anchor-link{color:var(--accent);text-decoration:none;margin-left:8px;font-size:13px}
+    pre{background:#0a0b0c;padding:12px;border-radius:8px;overflow:auto;color:#c9d1d9;font-size:13px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Backrooms — Quick Level Guide</h1>
+        <p class="lead">Short, copy-friendly descriptions of the levels implemented in your prototype: what to expect, transitions, and console tricks.</p>
+      </div>
+      <div>
+        <span class="badge">Prototype</span>
+      </div>
+    </header>
+
+    <nav>
+      <a class="btn" href="#level0">Level 0 — Lobby</a>
+      <a class="btn" href="#level1">Level 1 — Corridor</a>
+      <a class="btn" href="#level2">Level 2 — Storage</a>
+      <a class="btn" href="#level666">Level 666 — Hell</a>
+      <a class="btn" href="#level-neg0">Level -0 — Corrupted Lobby</a>
+      <a class="btn" href="#dev">Dev Console & Tips</a>
+    </nav>
+
+    <section id="level0" class="card">
+      <h2>Level 0 — Lobby</h2>
+      <div class="meta">The starting 'lobby' area — maze-like with denser corridors.</div>
+      <p>
+        Level 0 acts as the primary hub in the prototype. It uses a denser, tightened maze layout so corridors feel cramped and maze-like.
+      </p>
+      <ul>
+        <li><strong>Spawn:</strong> Often you begin here.</li>
+        <li><strong>Exit:</strong> Reaching the exit normally moves you to Level 1.</li>
+        <li><strong>Special:</strong> A red "Hell" door can appear here under certain conditions and teleports you to Level 666.</li>
+      </ul>
+      <div class="tip">
+        How to trigger the red door: the reverse-Konami input or the dev console <code>hell</code> command will spawn a red door somewhere in Level 0.
+      </div>
+    </section>
+
+    <section id="level1" class="card">
+      <h2>Level 1 — Corridor</h2>
+      <div class="meta">Long, narrow corridors — dimmer, with a clear exit tile.</div>
+      <p>
+        Level 1 is a simpler corridor map (open-ish, but long). In normal gameplay reaching the exit takes you deeper to Level 2 (the storage level).
+      </p>
+      <ul>
+        <li><strong>Spawn:</strong> Teleported or placed based on safe spawn logic.</li>
+        <li><strong>Exit behavior:</strong> When you step on the exit tile while in Level 1, you are moved to Level 2.</li>
+        <li><strong>Visuals:</strong> Darker ceiling/floor shades are used to set mood.</li>
+      </ul>
+    </section>
+
+    <section id="level2" class="card">
+      <h2>Level 2 — Storage</h2>
+      <div class="meta">A new 'storage' level added to the flow: Level 1 → Level 2 → Level 0 loop.</div>
+      <p>
+        Level 2 is intended as a deeper storage area (the file uses <code>level_2_maze</code>). In the updated flow, stepping on the exit in Level 2 returns you to the Lobby (Level 0), creating a simple loop.
+      </p>
+      <ul>
+        <li><strong>Purpose:</strong> Acts as a mid-tier level between the corridor and the lobby.</li>
+        <li><strong>Exit behavior:</strong> Exit from Level 2 returns the player to Level 0.</li>
+        <li><strong>Notes:</strong> This level is intentionally simple by default; you can expand the maze or add unique visuals later.</li>
+      </ul>
+    </section>
+
+    <section id="level666" class="card">
+      <h2>Level 666 — Hell</h2>
+      <div class="meta">A hostile, hellish area with a randomly generated maze.</div>
+      <p>
+        Level 666 is generated with a random carve algorithm so every spawn is chaotic and maze-like. If you reach the exit in this level you are sent to the corrupted lobby (Level -0).
+      </p>
+      <ul>
+        <li><strong>Spawn:</strong> Entered via the Hell door (red door spawned in Level 0) or developer teleport.</li>
+        <li><strong>Exit:</strong> Moves player into Level -0 (corrupted lobby) to continue the eerie sequence.</li>
+        <li><strong>Visuals & sound:</strong> More aggressive audio & warmer red-toned walls for atmosphere.</li>
+      </ul>
+    </section>
+
+    <section id="level-neg0" class="card">
+      <h2>Level -0 — Corrupted Lobby</h2>
+      <div class="meta">A corrupted, glitching version of the lobby with broken audio/visuals.</div>
+      <p>
+        Level -0 (internally <code>LEVEL_NEG0</code>) is a distorted variant of the lobby. It includes glitch overlays, tinting, and an intentionally broken humming sound effect that fades, cuts out, and stutters.
+      </p>
+      <ul>
+        <li><strong>Behavior:</strong> Movement can stutter (random skips) to convey corruption.</li>
+        <li><strong>Exit:</strong> Leaving Level -0 takes you into Level 1 (the corridor) to continue the loop.</li>
+        <li><strong>Glitches:</strong> Random visual artifacts appear on a timed interval; an audio glitch plays when a glitch starts.</li>
+      </ul>
+    </section>
+
+    <section id="dev" class="card">
+      <h2>Dev Console & Useful Commands</h2>
+      <div class="meta">Console and secret controls supported in the prototype.</div>
+      <p>
+        The prototype includes a dev console (openable via a Konami-like key sequence). Several quick commands help testing and teleporting.
+      </p>
+      <ul>
+        <li><strong>Open console:</strong> Enter the Konami sequence (up, up, down, down, left, right, left, right) to open the console.</li>
+        <li><strong>Commands:</strong>
+          <ul>
+            <li><code>help</code> — show available commands</li>
+            <li><code>levels</code> — list available levels (0,1,2,666,-0)</li>
+            <li><code>goto &lt;n&gt;</code> — teleport to a level (example: <code>goto 2</code>)</li>
+            <li><code>gt</code> / <code>teleport</code> — click overlay to teleport</li>
+            <li><code>hell</code> — spawn the Hell door (red door) in Level 0</li>
+            <li><code>arrow</code> — toggle HUD guidance arrow</li>
+          </ul>
+        </li>
+        <li><strong>Reverse konami:</strong> An alternate Konami triggers the Hell door automatically when pressed in Level 0.</li>
+      </ul>
+
+      <div class="tip">
+        Quick dev tip: use <code>goto 2</code> to test Level 2, and step on Level 2's exit to verify you return to Level 0.
+      </div>
+
+      <h3 style="margin-top:12px">Example console usage</h3>
+      <pre>
+&gt; levels
+Levels: 0=lobby, 1=corridor, 2=storage, 666=hell, -0=corrupted-lobby
+
+&gt; goto 2
+Loaded level 2.
+      </pre>
+    </section>
+
+    <footer>
+      <div>Save this file locally as <code>levels.html</code>. Want a printable version or a fancier styled page (CSS/JS)? Tell me and I’ll make one.</div>
+    </footer>
+  </div>
+</body>
+</html>
